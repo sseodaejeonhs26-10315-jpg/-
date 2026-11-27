@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>어디 갔지? · 학교 분실물 찾기</title>
+<link rel="icon" href="data:,">
+<style>
+:root{font-family:system-ui,-apple-system,"맑은 고딕",sans-serif;color:#18263b;background:#f4f7fb;line-height:1.6}*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:10px 17px;background:#2558d8;color:white;font-weight:650}button:hover{filter:brightness(.94)}button.secondary{background:#edf1f8;color:#243e66}button.danger{background:#fff0f0;color:#a62424}button:disabled{opacity:.5;cursor:wait}input,select,textarea{width:100%;padding:11px;border:1px solid #c9d2e1;border-radius:9px;background:white;color:#18263b}select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%23344b6c' stroke-width='2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}textarea{resize:vertical}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #93b4ff;outline-offset:2px}header{background:white;border-bottom:1px solid #e0e6ef}.bar,main{max-width:1080px;margin:auto;padding:22px 24px}.bar{display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{font-size:24px;font-weight:850;letter-spacing:-1px}.brand span{color:#2558d8}.caption,.muted{color:#56677e;font-size:14px}nav{display:flex;gap:8px;flex-wrap:wrap}nav button{background:transparent;color:#56677e}nav button[aria-pressed=true]{background:#eaf0ff;color:#214dc0}.intro{padding:24px 0 20px}h1{font-size:32px;letter-spacing:-1px;line-height:1.35;margin:0 0 12px}h2{font-size:22px;margin:0 0 16px}h3{margin:0 0 8px;font-size:19px}p{margin:8px 0 14px}.panel{background:white;border:1px solid #e0e6ef;border-radius:16px;padding:24px;margin-bottom:20px}.filters{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:12px}.field{display:block;font-size:14px;font-weight:600}.field input,.field select,.field textarea{display:block;margin-top:6px;font-weight:400}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{overflow:hidden;background:white;border:1px solid #e0e6ef;border-radius:16px}.card img{width:100%;height:190px;object-fit:cover;background:#eef2f8}.card-body{padding:18px}.tag{display:inline-block;background:#eaf0ff;color:#214dc0;border-radius:6px;padding:3px 8px;font-size:14px}.old{background:#fff1d6;color:#805000}.card p{font-size:14px;margin:5px 0;color:#56677e}.card button{margin-top:12px}.empty{text-align:center;padding:48px 20px;border:1px dashed #bdcbe0;border-radius:16px;background:white}.empty p{color:#56677e}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.full{grid-column:1/-1}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}.notice{background:#eef3ff;border-radius:10px;padding:13px 16px;font-size:14px;color:#334e7a}.count{margin:20px 0 12px;color:#56677e;font-size:14px}dialog{border:0;border-radius:18px;padding:26px;width:min(540px,calc(100% - 28px));max-height:90vh;overflow:auto;box-shadow:0 16px 70px #10223c40}dialog::backdrop{background:#14233a80}.detail-img{width:100%;max-height:250px;object-fit:contain;background:#f4f7fb;border-radius:10px}.code{font-size:28px;font-weight:800;letter-spacing:3px;color:#214dc0}.record{border-top:1px solid #e0e6ef;padding:17px 0}.record:first-child{border-top:0}.check{display:flex;gap:9px;align-items:flex-start;font-size:14px;margin-top:12px}.check input{width:auto;margin-top:5px}.error{color:#b12323;font-size:14px;white-space:pre-wrap}#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#182b46;color:white;border-radius:12px;padding:12px 22px;max-width:90%;z-index:5}#photo-preview{max-height:180px;max-width:100%;border-radius:10px;margin-top:12px}footer{text-align:center;padding:28px 15px;font-size:14px;color:#56677e}[hidden]{display:none!important}@media(max-width:720px){.bar{align-items:flex-start;flex-direction:column}.filters,.form-grid{grid-template-columns:1fr 1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}h1{font-size:27px}.bar,main{padding:18px}.panel{padding:18px}.filters .field:first-child{grid-column:1/-1}}@media(max-width:460px){.grid,.filters,.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.card img{height:220px}nav button{padding:9px 12px}}
+</style>
+<style>
+.card,.field,.record{min-width:0}.card-body,.record,.notice,#detail-content{overflow-wrap:anywhere}.record p,#detail-content p{white-space:pre-wrap}.error-panel{background:#fff0f0;color:#932121;border:1px solid #efb8b8;border-radius:12px;padding:16px;margin-top:16px}.error-panel p{margin:0 0 10px}#items[aria-live]{min-height:120px}dialog{scrollbar-gutter:stable}#detail-content .notice{margin-bottom:14px}#detail-content textarea{margin-top:8px}
+.version{font-size:14px;font-weight:600;letter-spacing:0;color:#56677e;margin-left:8px}.impact{background:#eaf5ef;border:1px solid #c5dfcf;border-radius:16px;padding:20px 24px;margin-bottom:24px}.impact h2{font-size:20px;margin-bottom:6px}.impact p{color:#385c49;font-size:14px;margin:8px 0}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:18px 0}.stats div{border-left:3px solid #b0d1bc;padding-left:14px}.stats dt{font-size:14px;color:#385c49}.stats dd{font-size:27px;font-weight:800;line-height:1.4;margin:4px 0 0;color:#19452d}.manage-filters{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin:18px 0}.claim-filter{max-width:440px;margin-bottom:20px}@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.impact{padding:18px}.manage-filters{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="bar"><div><div class="brand">어디 <span>갔지?</span><span class="version">버전 3</span></div><div class="caption">우리 학교 분실물 찾기</div></div><nav aria-label="주요 메뉴"><button data-page="list" aria-pressed="true">물건 찾기</button><button data-page="register" aria-pressed="false">습득물 등록</button><button data-page="manage" aria-pressed="false">수령·관리</button></nav></div></header>
+<main>
+<div class="notice">로컬 체험판 · 이 브라우저에만 저장됩니다. 관리자 로그인, AI 분류, 외부 알림은 제공하지 않습니다.</div>
+<div id="storage-error" class="error-panel" role="alert" hidden><p id="storage-error-text"></p><div class="actions"><button id="retry-storage" class="secondary">저장소 다시 확인</button><button id="backup-storage" class="secondary">원본 데이터 백업</button><button id="reset-storage" class="danger">이 앱 데이터 초기화</button></div><p class="muted">기존 데이터는 자동으로 삭제하지 않습니다. 초기화가 필요하면 먼저 원본을 백업하세요.</p></div>
+<section id="page-list">
+<div class="intro"><h1>잃어버린 물건을 되찾고,<br>더 오래 사용해요.</h1><p class="muted">사진으로 내 물건을 찾고, 보관 장소에서 확인 후 받아 가세요.</p></div>
+<section class="impact" aria-labelledby="impact-title"><h2 id="impact-title">다시 주인에게, 다시 일상으로</h2><p>쓸 수 있는 물건을 되찾아 불필요한 구매와 폐기를 줄이는 것이 목표예요.<br>지속가능발전목표 ‘책임 있는 소비와 생산’을 학교에서 실천해요.</p><dl class="stats"><div><dt>등록된 물건</dt><dd id="stat-total">0개</dd></div><div><dt>주인을 기다리는 물건</dt><dd id="stat-stored">0개</dd></div><div><dt>주인에게 돌아간 물건</dt><dd id="stat-returned">0개</dd></div><div><dt>회수율</dt><dd id="stat-rate">0%</dd></div></dl><p>회수율 = 반환 완료 ÷ 등록된 물건 × 100<br>이 브라우저에 남아 있는 전체 기록을 기준으로 계산해요. 삭제한 기록은 제외되며, 쓰레기 감소량을 측정한 수치는 아니에요.</p></section>
+<div class="panel"><div class="filters"><label class="field">키워드<input id="search" type="search" placeholder="물건 이름, 색상, 특징"></label><label class="field">종류<select id="filter-category"></select></label><label class="field">발견 장소<input id="filter-place" placeholder="예: 체육관"></label><label class="field">발견 날짜<input id="filter-date" type="date"></label></div><div class="actions"><button id="subscribe" class="secondary">이 종류 알림 신청</button><button id="reset-filters" class="secondary">검색 초기화</button><span class="muted" id="subscriptions"></span></div><p class="muted">알림은 선택한 종류의 물건이 이 브라우저에서 새로 등록되면 표시됩니다.</p></div>
+<div class="actions"><label class="field">목록 정렬<select id="list-sort"><option value="newest">최근 등록순</option><option value="oldest">오래된 등록순</option><option value="found">발견일이 오래된 순</option></select></label></div><div id="notifications" aria-live="polite"></div><p class="count" id="result-count" role="status"></p><div id="items" class="grid"></div>
+</section>
+<section id="page-register" hidden><div class="intro"><h1>주운 물건을 알려주세요.</h1><p class="muted">사진과 간단한 정보만 입력하면 등록이 끝나요.</p></div><form id="register-form" class="panel"><div class="form-grid">
+<label class="field full">물건 사진 *<input name="photo" type="file" accept="image/jpeg,image/png,image/webp" required><span class="muted">JPG, PNG, WebP · 최대 10MB · 사진은 작게 압축해 저장합니다.</span><img id="photo-preview" alt="선택한 물건 사진" hidden></label>
+<label class="field">물건 이름 *<input name="title" maxlength="60" required placeholder="예: 파란색 필통"></label><label class="field">종류 *<select name="category" id="register-category" required></select></label>
+<label class="field">발견 장소 *<input name="place" required maxlength="60" placeholder="예: 2층 도서관"></label><label class="field">발견 날짜 *<input name="date" id="found-date" type="date" required></label>
+<label class="field">맡긴 곳 *<input name="storage" required maxlength="60" placeholder="예: 학생회실 분실물 상자"></label><label class="field">공개할 특징<input name="description" maxlength="180" placeholder="예: 파란색, 지퍼 달림"></label></div><p class="muted">주인 확인에 사용할 숨은 특징과 개인정보는 공개하지 마세요.</p><p id="register-error" class="error" role="alert"></p><button type="submit">등록하기</button></form></section>
+<section id="page-manage" hidden><div class="intro"><h1>수령 신청과 보관 기록</h1><p class="muted">담당자는 수령 코드와 물건의 특징을 확인하고 인계해 주세요.</p></div><div class="notice">체험판에서는 누구나 관리 화면을 열 수 있습니다. 실제 학교 운영에는 로그인과 서버 저장이 필요합니다.</div><div class="panel" style="margin-top:20px"><h2>수령 신청</h2><label class="field claim-filter">수령 코드 또는 물건 이름<input id="claim-search" type="search" maxlength="100" placeholder="예: 123456 또는 필통"></label><div id="claims"></div></div><div class="panel"><h2>보관·반환 기록</h2><p class="muted">발견일 기준 30일이 지난 물건은 장기 보관으로 표시됩니다.</p><div class="manage-filters"><label class="field">기록 검색<input id="record-search" type="search" maxlength="100" placeholder="물건 이름, 장소, 반환 코드"></label><label class="field">보관 상태<select id="record-status"><option value="">전체</option><option value="stored">보관 중</option><option value="returned">반환 완료</option><option value="old">장기 보관 (30일 이상)</option></select></label></div><button id="reset-manage-filters" class="secondary">관리 검색 초기화</button><p id="record-count" class="count" role="status"></p><div id="records"></div></div><div class="panel" style="margin-top:20px"><h2>데이터 백업·복원</h2><p class="muted">사진과 수령 신청, 반환 기록을 파일로 보관하거나 다른 브라우저로 옮길 수 있어요. 복원하면 현재 기록을 백업 파일의 내용으로 교체해요. 먼저 현재 데이터를 백업해 주세요.</p><div class="actions"><button id="export-data" type="button" class="secondary">전체 데이터 백업</button></div><label class="field" style="margin-top:16px">복원할 백업 파일<input id="restore-file" type="file" accept=".json,application/json"></label><p class="muted">이 프로그램의 JSON 백업 파일만 선택해 주세요. 파일은 외부로 전송하지 않아요.</p><p id="restore-error" class="error" role="alert"></p><p id="restore-status" role="status"></p></div></section>
+</main>
+<footer>물건 하나를 되찾는 작은 연결 · 어디 갔지?</footer>
+<dialog id="detail" aria-labelledby="detail-title"><div id="detail-content"></div><div class="actions"><button id="close-dialog" class="secondary">닫기</button></div></dialog>
+<dialog id="edit-dialog" aria-labelledby="edit-heading"><h2 id="edit-heading">보관 중인 물건 정보 수정</h2><p class="muted">잘못 적은 정보를 고칠 수 있어요. 수령 신청과 기존 등록일은 유지돼요.</p><form id="edit-form"><img id="edit-preview" class="detail-img" alt="수정할 물건의 현재 사진"><div class="form-grid"><label class="field full">사진 변경 (선택)<input id="edit-photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp"><span class="muted">선택하지 않으면 기존 사진을 사용해요.</span></label><label class="field">물건 이름 *<input id="edit-title" name="title" required maxlength="60"></label><label class="field">종류 *<select id="edit-category" name="category" required></select></label><label class="field">발견 장소 *<input id="edit-place" name="place" required maxlength="60"></label><label class="field">발견 날짜 *<input id="edit-date" name="date" type="date" required></label><label class="field">맡긴 곳 *<input id="edit-storage" name="storage" required maxlength="60"></label><label class="field">공개할 특징<input id="edit-description" name="description" maxlength="180"></label></div><p id="edit-error" class="error" role="alert"></p><div class="actions"><button type="submit">수정 저장</button><button id="edit-cancel" type="button" class="secondary">취소</button></div></form></dialog>
+<dialog id="confirm-action" aria-labelledby="confirm-title" aria-describedby="confirm-message"><h2 id="confirm-title">처리 확인</h2><p id="confirm-message"></p><div class="actions"><button id="confirm-yes" type="button">확인</button><button id="confirm-no" type="button" class="secondary" autofocus>취소</button></div></dialog>
+<div id="toast" role="status" hidden></div>
+<script>
+'use strict';
+const $ = selector => document.querySelector(selector);
+const categories = ['전자기기', '의류', '문구', '텀블러·생활용품', '기타'];
+const KEY = 'where-school-v1';
+const fresh = () => ({items: [], claims: [], subscriptions: [], notifications: []});
+const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
+let state = fresh(), storageBroken = false, currentItemId = null, timer;
+
+function today() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function validDate(value) {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(value + 'T00:00:00Z');
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0,10) === value;
+}
+function old(item) {
+  // Calendar days avoid daylight-saving and time-of-day boundary errors.
+  return (Date.parse(today()) - Date.parse(item.date)) / 86400000 >= 30;
+}
+function id() {
+  return typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2);
+}
+function validate(data) {
+  const text = (value, max, required = true) => typeof value === 'string' && value.length <= max && (!required || value.trim().length > 0);
+  const identifier = value => typeof value === 'string' && /^[a-zA-Z0-9_-]{1,100}$/.test(value);
+  const timestamp = value => typeof value === 'string' && Number.isFinite(Date.parse(value));
+  if (!data || !['items','claims','subscriptions','notifications'].every(key => Array.isArray(data[key]))) throw Error('저장 데이터 형식이 올바르지 않습니다.');
+  const ids = new Set(), claimIds = new Set(), codes = new Set();
+  for (const item of data.items) {
+    if (!item || !identifier(item.id) || ids.has(item.id) || !text(item.title,60) || !categories.includes(item.category) || !text(item.place,60) || !text(item.storage,60) || !text(item.description,180,false) || !validDate(item.date) || !timestamp(item.createdAt) || !['stored','returned'].includes(item.status) || typeof item.photo !== 'string' || !/^data:image\/(jpeg|png|webp);base64,[a-zA-Z0-9+/=]+$/.test(item.photo)) throw Error('저장된 물건 정보가 손상되었습니다.');
+    if (item.updatedAt !== undefined && !timestamp(item.updatedAt)) throw Error('수정 기록이 손상되었습니다.');
+    if (item.status === 'returned' && (!timestamp(item.returnedAt) || typeof item.returnCode !== 'string' || !/^\d{6}$/.test(item.returnCode))) throw Error('반환 기록이 손상되었습니다.');
+    ids.add(item.id);
+  }
+  for (const claim of data.claims) {
+    if (!claim || !identifier(claim.id) || claimIds.has(claim.id) || !ids.has(claim.itemId) || !text(claim.feature,300) || claim.feature.trim().length < 5 || typeof claim.code !== 'string' || !/^\d{6}$/.test(claim.code) || codes.has(claim.code) || !timestamp(claim.createdAt)) throw Error('수령 신청 정보가 손상되었습니다.');
+    claimIds.add(claim.id); codes.add(claim.code);
+  }
+  if (data.subscriptions.some(c => !categories.includes(c)) || new Set(data.subscriptions).size !== data.subscriptions.length || data.notifications.some(n => !n || !ids.has(n.itemId) || !text(n.title,60))) throw Error('알림 정보가 손상되었습니다.');
+  return data;
+}
+function readState() {
+  const saved = localStorage.getItem(KEY);
+  return saved === null ? fresh() : validate(JSON.parse(saved));
+}
+function storageError(message) {
+  storageBroken = true;
+  $('#storage-error').hidden = false;
+  $('#storage-error-text').textContent = message + ' 원본 데이터는 유지됩니다. 저장소를 복구하기 전에는 변경할 수 없습니다.';
+}
+function refreshState() {
+  try {
+    const latest = readState();
+    state = latest; storageBroken = false; $('#storage-error').hidden = true;
+    return true;
+  } catch {
+    storageError('저장 데이터를 읽을 수 없거나 브라우저 저장소가 차단되었습니다.');
+    return false;
+  }
+}
+function save(change) {
+  // Read immediately before each change so an older tab cannot resurrect returned items.
+  if (!refreshState()) throw Error('저장소를 먼저 복구해 주세요. 입력 내용은 유지됩니다.');
+  const next = validate(change(state));
+  try { localStorage.setItem(KEY, JSON.stringify(next)); }
+  catch { throw Error('저장 공간이 부족하거나 저장소 사용이 차단되었습니다. 불필요한 게시글을 정리하거나 브라우저 설정을 확인해 주세요. 입력 내용은 유지됩니다.'); }
+  state = next;
+}
+function toast(message) {
+  $('#toast').textContent = message; $('#toast').hidden = false;
+  clearTimeout(timer); timer = setTimeout(() => $('#toast').hidden = true, 6000);
+}
+function page(name) {
+  refreshState();
+  document.querySelectorAll('main>section').forEach(el => el.hidden = el.id !== 'page-'+name);
+  document.querySelectorAll('[data-page]').forEach(el => el.setAttribute('aria-pressed',String(el.dataset.page === name)));
+  $('#found-date').max = today(); render();
+}
+function render() {
+  const returnedCount = state.items.filter(item => item.status === 'returned').length;
+  $('#stat-total').textContent = `${state.items.length}개`;
+  $('#stat-stored').textContent = `${state.items.length - returnedCount}개`;
+  $('#stat-returned').textContent = `${returnedCount}개`;
+  $('#stat-rate').textContent = `${state.items.length ? Math.round(returnedCount / state.items.length * 100) : 0}%`;
+  const query = $('#search').value.trim().toLocaleLowerCase();
+  const category = $('#filter-category').value;
+  const place = $('#filter-place').value.trim().toLocaleLowerCase();
+  const date = $('#filter-date').value;
+  const items = state.items.filter(i => i.status === 'stored' && (!category || i.category === category) && (!date || i.date === date) && i.place.toLocaleLowerCase().includes(place) && [i.title,i.category,i.description,i.place,i.storage].join(' ').toLocaleLowerCase().includes(query));
+  const sortOrder = $('#list-sort').value;
+  items.sort((a,b) => sortOrder === 'oldest' ? Date.parse(a.createdAt)-Date.parse(b.createdAt) : sortOrder === 'found' ? a.date.localeCompare(b.date) || Date.parse(a.createdAt)-Date.parse(b.createdAt) : Date.parse(b.createdAt)-Date.parse(a.createdAt));
+  $('#result-count').textContent = `보관 중인 물건 ${items.length}개`;
+  $('#items').innerHTML = items.length ? items.map(i => `<article class="card"><img src="${escape(i.photo)}" alt="${escape(i.title)}"><div class="card-body"><span class="tag">${escape(i.category)}</span><h3>${escape(i.title)}</h3><p>발견 · ${escape(i.place)} / ${escape(i.date)}</p><p>보관 · ${escape(i.storage)}</p><button data-open="${escape(i.id)}">상세 보기 · 수령 신청</button></div></article>`).join('') : '<div class="empty full"><h3>아직 일치하는 물건이 없어요.</h3><p>검색 조건을 바꾸거나, 종류를 선택해 알림을 신청해 보세요.</p><button data-register>주운 물건 등록하기</button></div>';
+  $('#subscriptions').textContent = state.subscriptions.length ? `신청 중: ${state.subscriptions.join(', ')} (같은 종류를 다시 누르면 해제)` : '신청한 알림 없음';
+  $('#notifications').innerHTML = state.notifications.length ? `<div class="panel"><h3>새로 들어온 물건</h3>${state.notifications.map(n => `<div class="record"><button class="secondary" data-open="${escape(n.itemId)}">${escape(n.title)} · 비슷한 물건이 등록되었어요</button></div>`).join('')}<button class="secondary" data-clear-notifications>알림 지우기</button></div>` : '';
+  const claimQuery = $('#claim-search').value.trim().toLocaleLowerCase();
+  const activeClaims = state.claims.filter(c => state.items.some(i => i.id === c.itemId && i.status === 'stored' && (!claimQuery || c.code.includes(claimQuery) || i.title.toLocaleLowerCase().includes(claimQuery))));
+  $('#claims').innerHTML = activeClaims.length ? activeClaims.map(c => {
+    const i = state.items.find(i => i.id === c.itemId);
+    return `<div class="record"><h3>${escape(i.title)}</h3><div class="code">${escape(c.code)}</div><p>신청 특징: ${escape(c.feature)}</p><p class="muted">보관 장소: ${escape(i.storage)} · 신청 ${new Date(c.createdAt).toLocaleString('ko-KR')}</p><label class="check"><input type="checkbox" data-check="${escape(c.id)}">코드와 숨은 특징을 실물과 대조해 주인임을 확인했습니다.</label><div class="actions"><button data-return="${escape(c.id)}">반환 완료</button><button class="secondary" data-reject="${escape(c.id)}">특징 불일치 · 신청 반려</button></div></div>`;
+  }).join('') : `<p class="muted">${claimQuery ? '검색 조건과 일치하는 수령 신청이 없습니다.' : '대기 중인 수령 신청이 없습니다. 상세 화면에서 신청할 수 있어요.'}</p>`;
+  const recordQuery = $('#record-search').value.trim().toLocaleLowerCase();
+  const recordStatus = $('#record-status').value;
+  const records = state.items.filter(i => (!recordStatus || (recordStatus === 'old' ? i.status === 'stored' && old(i) : i.status === recordStatus)) && [i.title,i.place,i.storage,i.returnCode || ''].join(' ').toLocaleLowerCase().includes(recordQuery));
+  $('#record-count').textContent = `조회된 기록 ${records.length}개`;
+  $('#records').innerHTML = records.length ? records.map(i => `<div class="record"><h3>${escape(i.title)} <span class="tag ${i.status === 'stored' && old(i) ? 'old' : ''}">${i.status === 'returned' ? '반환 완료' : old(i) ? '장기 보관 (30일 이상)' : '보관 중'}</span></h3><p class="muted">발견 ${escape(i.date)} · ${escape(i.place)} · 보관 ${escape(i.storage)}</p>${i.returnedAt ? `<p class="muted">반환 ${new Date(i.returnedAt).toLocaleString('ko-KR')} · 코드 ${escape(i.returnCode)}</p>` : ''}<div class="actions"><button class="secondary" data-open="${escape(i.id)}">상세 보기</button>${i.status === 'stored' ? `<button class="secondary" data-edit="${escape(i.id)}">정보 수정</button>` : ''}<button class="danger" data-delete="${escape(i.id)}">게시글 삭제</button></div></div>`).join('') : `<p class="muted">${state.items.length ? '검색 조건과 일치하는 기록이 없습니다.' : '아직 등록된 물건이 없습니다.'}</p>`;
+}
+function resetFilters() {
+  ['#search','#filter-category','#filter-place','#filter-date'].forEach(s => $(s).value = '');
+  $('#list-sort').value = 'newest';
+}
+document.querySelectorAll('[data-page]').forEach(el => el.onclick = () => page(el.dataset.page));
+$('#filter-category').innerHTML = '<option value="">전체</option>' + categories.map(c => `<option>${c}</option>`).join('');
+$('#register-category').innerHTML = categories.map(c => `<option>${c}</option>`).join('');
+$('#edit-category').innerHTML = categories.map(c => `<option>${c}</option>`).join('');
+$('#found-date').value = today(); $('#found-date').max = today();
+['#search','#filter-category','#filter-place','#filter-date','#list-sort'].forEach(s => $(s).addEventListener('input',render));
+['#claim-search','#record-search','#record-status'].forEach(s => $(s).addEventListener('input',render));
+$('#reset-filters').onclick = () => { resetFilters(); render(); };
+$('#reset-manage-filters').onclick = () => {
+  ['#claim-search','#record-search','#record-status'].forEach(s => $(s).value = '');
+  render();
+};
+$('#subscribe').onclick = () => {
+  const category = $('#filter-category').value;
+  if (!category) return toast('알림을 받을 물건 종류를 선택해 주세요.');
+  try {
+    let removed = false;
+    save(s => { removed = s.subscriptions.includes(category); return {...s, subscriptions: removed ? s.subscriptions.filter(c => c !== category) : [...s.subscriptions,category]}; });
+    render(); toast(removed ? '알림 신청을 해제했어요.' : '이 브라우저에서 새 물건이 등록되면 알려드릴게요.');
+  } catch (e) { toast(e.message); }
+};
+let previewUrl;
+function checkPhoto(file) {
+  if (!file || !file.size) throw Error('사진을 선택해 주세요.');
+  if (!['image/jpeg','image/png','image/webp'].includes(file.type)) throw Error('JPG, PNG, WebP 사진을 선택해 주세요.');
+  if (file.size > 10*1024*1024) throw Error('10MB 이하 사진을 선택해 주세요.');
+}
+function clearPreview() {
+  if (previewUrl) URL.revokeObjectURL(previewUrl);
+  previewUrl = null; $('#photo-preview').hidden = true; $('#photo-preview').removeAttribute('src');
+}
+$('[name=photo]').onchange = () => {
+  clearPreview(); $('#register-error').textContent = '';
+  const file = $('[name=photo]').files[0];
+  if (!file) return;
+  try { checkPhoto(file); previewUrl = URL.createObjectURL(file); $('#photo-preview').src = previewUrl; $('#photo-preview').hidden = false; }
+  catch (e) { $('#register-error').textContent = e.message; }
+};
+$('#photo-preview').onerror = () => { $('#photo-preview').hidden = true; $('#register-error').textContent = '사진을 읽을 수 없어요. 다른 사진을 선택해 주세요.'; };
+async function compress(file) {
+  checkPhoto(file);
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image(); img.src = url; await img.decode();
+    const ratio = Math.min(1,900/Math.max(img.width,img.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1,Math.round(img.width*ratio)); canvas.height = Math.max(1,Math.round(img.height*ratio));
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'white'; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    return canvas.toDataURL('image/jpeg',.72);
+  } catch { throw Error('사진을 읽을 수 없어요. 다른 사진을 선택해 주세요.'); }
+  finally { URL.revokeObjectURL(url); }
+}
+$('#register-form').onsubmit = async event => {
+  event.preventDefault();
+  const form = event.currentTarget, button = form.querySelector('[type=submit]');
+  if (button.disabled) return;
+  $('#register-error').textContent = ''; button.disabled = true; button.textContent = '사진 저장 중…';
+  try {
+    const data = new FormData(form);
+    for (const key of ['title','category','place','date','storage']) if (!String(data.get(key) ?? '').trim()) throw Error('물건 이름, 종류, 발견 장소, 날짜, 맡긴 곳을 입력해 주세요.');
+    if (!validDate(data.get('date')) || data.get('date') > today()) throw Error('발견 날짜는 오늘 또는 이전의 올바른 날짜로 입력해 주세요.');
+    const photo = await compress(data.get('photo'));
+    const item = {id:id(), title:data.get('title').trim(), category:data.get('category'), place:data.get('place').trim(), date:data.get('date'), storage:data.get('storage').trim(), description:data.get('description').trim(), photo, status:'stored', createdAt:new Date().toISOString()};
+    save(s => ({...s, items:[item,...s.items], notifications:s.subscriptions.includes(item.category) ? [{itemId:item.id,title:item.title},...s.notifications] : s.notifications}));
+    form.reset(); $('#found-date').value = today(); clearPreview(); resetFilters(); page('list');
+    toast('등록했어요. 물건을 맡긴 곳에 보관해 주세요.');
+  } catch (e) { $('#register-error').textContent = e.message; }
+  finally { button.disabled = false; button.textContent = '등록하기'; }
+};
+function openItem(itemId) {
+  refreshState();
+  const item = state.items.find(i => i.id === itemId);
+  if (!item) { $('#detail').close(); currentItemId = null; return toast('삭제되었거나 찾을 수 없는 물건입니다.'); }
+  currentItemId = itemId;
+  const claims = state.claims.filter(c => c.itemId === item.id);
+  const returned = item.status === 'returned';
+  $('#detail-content').innerHTML = `<h2 id="detail-title">${escape(item.title)}</h2><img class="detail-img" src="${escape(item.photo)}" alt="${escape(item.title)}"><p><span class="tag">${escape(item.category)}</span> <span class="tag">${returned ? '반환 완료' : '보관 중'}</span></p><p>발견: ${escape(item.place)} · ${escape(item.date)}<br>보관: ${escape(item.storage)}</p><p>${escape(item.description)}</p>${returned ? `<div class="notice">${new Date(item.returnedAt).toLocaleString('ko-KR')} 반환 완료<br>수령 코드 <strong>${escape(item.returnCode)}</strong><br>반환된 물건에는 수령 신청을 할 수 없습니다.</div>` : `${claims.map(c => `<div class="notice">접수된 수령 코드 <strong>${escape(c.code)}</strong><br>담당자 확인 후 수령할 수 있습니다.</div>`).join('')}<form id="claim-form"><label class="field">사진에 보이지 않는 내 물건의 특징 *<textarea name="feature" rows="3" required minlength="5" maxlength="300" placeholder="예: 필통 안에 이름을 적은 지우개가 있어요"></textarea></label><p class="muted">이름·전화번호·비밀번호 등 민감한 정보는 적지 마세요. 코드는 본인 확인을 통과했다는 뜻이 아닙니다.</p><p class="error" id="claim-error" role="alert"></p><button type="submit">수령 코드 발급</button></form>`}`;
+  if (!returned) $('#claim-form').onsubmit = event => {
+    event.preventDefault();
+    const feature = new FormData(event.currentTarget).get('feature').trim();
+    if (feature.length < 5 || feature.length > 300) { $('#claim-error').textContent = '구체적인 특징을 5자 이상 300자 이하로 적어 주세요.'; return; }
+    try {
+      let code, duplicate = false;
+      save(s => {
+        if (!s.items.some(i => i.id === itemId && i.status === 'stored')) throw Error('이미 반환되었거나 삭제된 물건입니다.');
+        const existing = s.claims.find(c => c.itemId === itemId && c.feature.replace(/\s+/g,' ') === feature.replace(/\s+/g,' '));
+        if (existing) { code = existing.code; duplicate = true; return s; }
+        do { const bytes = new Uint32Array(1); crypto.getRandomValues(bytes); code = String(100000+bytes[0]%900000); } while (s.claims.some(c => c.code === code));
+        return {...s, claims:[{id:id(),itemId,feature,code,createdAt:new Date().toISOString()},...s.claims]};
+      });
+      render(); openItem(itemId);
+      $('#detail-content').insertAdjacentHTML('beforeend',`<div class="notice" role="status">${duplicate ? '같은 특징으로 접수한 신청이 있어 기존 코드를 보여드립니다.' : '수령 신청이 접수되었습니다.'}<br>수령 코드 <strong class="code">${escape(code)}</strong><br>맡긴 곳에서 담당자에게 보여주세요.</div>`);
+    } catch (e) { $('#claim-error').textContent = e.message; }
+  };
+  if (!$('#detail').open) $('#detail').showModal();
+}
+$('#close-dialog').onclick = () => $('#detail').close();
+$('#detail').addEventListener('close',() => currentItemId = null);
+
+let pendingAction = null;
+function confirmAction(message, action) {
+  $('#confirm-message').textContent = message;
+  pendingAction = action;
+  if (!$('#confirm-action').open) $('#confirm-action').showModal();
+}
+$('#confirm-no').onclick = () => { pendingAction = null; $('#confirm-action').close(); };
+$('#confirm-action').addEventListener('close',() => pendingAction = null);
+$('#confirm-yes').onclick = () => {
+  const action = pendingAction;
+  pendingAction = null;
+  $('#confirm-action').close();
+  try { if (action) action(); }
+  catch (e) { render(); toast(e.message); }
+};
+document.addEventListener('click',event => {
+  const button = event.target.closest('button');
+  if (!button) return;
+  try {
+    if (button.hasAttribute('data-open')) openItem(button.dataset.open);
+    if (button.hasAttribute('data-edit')) openEdit(button.dataset.edit);
+    if (button.hasAttribute('data-register')) page('register');
+    if (button.hasAttribute('data-clear-notifications')) { save(s => ({...s,notifications:[]})); render(); }
+    if (button.hasAttribute('data-return')) {
+      const checked = $(`[data-check="${button.dataset.return}"]`);
+      if (!checked || !checked.checked) return toast('코드와 실물을 대조한 뒤 확인란을 체크해 주세요.');
+      confirmAction('주인 확인을 마치고 물건을 인계했나요? 반환 완료로 기록합니다.',() => {
+        save(s => {
+        const claim = s.claims.find(c => c.id === button.dataset.return);
+        if (!claim) throw Error('신청이 취소되었거나 삭제되었습니다. 화면을 다시 확인해 주세요.');
+        if (!s.items.some(i => i.id === claim.itemId && i.status === 'stored')) throw Error('이미 반환되었거나 삭제된 물건입니다.');
+        return {...s, items:s.items.map(i => i.id === claim.itemId ? {...i,status:'returned',returnedAt:new Date().toISOString(),returnCode:claim.code} : i), notifications:s.notifications.filter(n => n.itemId !== claim.itemId)};
+      });
+        render(); toast('반환 완료로 기록했어요. 검색 목록에서 제외됩니다.');
+      });
+    }
+    if (button.hasAttribute('data-reject')) {
+      confirmAction('특징이 일치하지 않는 신청을 반려할까요? 해당 코드는 취소되고 물건은 계속 보관됩니다.',() => {
+        save(s => ({...s, claims:s.claims.filter(c => c.id !== button.dataset.reject)})); render(); toast('신청을 반려했습니다.');
+      });
+    }
+    if (button.hasAttribute('data-delete')) {
+      const itemId = button.dataset.delete;
+      confirmAction('이 게시글과 관련 수령 신청을 삭제할까요? 삭제 후에는 복구할 수 없습니다.',() => {
+        save(s => ({...s,items:s.items.filter(i => i.id !== itemId),claims:s.claims.filter(c => c.itemId !== itemId),notifications:s.notifications.filter(n => n.itemId !== itemId)}));
+        render(); toast('게시글을 삭제했습니다.');
+      });
+    }
+  } catch (e) { render(); toast(e.message); }
+});
+$('#retry-storage').onclick = () => { if (refreshState()) { render(); toast('저장소를 다시 읽었습니다.'); } };
+$('#backup-storage').onclick = () => {
+  try {
+    const original = localStorage.getItem(KEY);
+    if (original === null) return toast('백업할 저장 데이터가 없습니다.');
+    const url = URL.createObjectURL(new Blob([original],{type:'application/json'}));
+    const link = document.createElement('a'); link.href = url; link.download = `어디갔지-원본-${today()}.json`;
+    document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url),1000);
+    toast('원본 백업 파일을 다운로드했습니다.');
+  } catch { toast('브라우저 저장소에 접근할 수 없어 백업하지 못했습니다.'); }
+};
+$('#reset-storage').onclick = () => {
+  confirmAction('이 앱에 저장된 물건·수령 신청·알림을 모두 초기화할까요? 복구할 수 없습니다. 먼저 원본 데이터 백업을 권장합니다.',() => {
+    try { localStorage.setItem(KEY,JSON.stringify(fresh())); refreshState(); $('#detail').close(); render(); toast('이 앱의 저장 데이터만 초기화했습니다.'); }
+    catch { storageError('저장소에 쓸 수 없습니다. 브라우저 설정을 확인해 주세요.'); }
+  });
+};
+window.addEventListener('storage',event => {
+  if (event.key !== KEY && event.key !== null) return;
+  refreshState(); render();
+  if ($('#edit-dialog').open) { $('#edit-dialog').close(); toast('다른 창에서 정보가 변경되었습니다. 수정 화면을 다시 열어 주세요.'); }
+  if ($('#confirm-action').open) { pendingAction = null; $('#confirm-action').close(); }
+  // Avoid silently replacing a feature the user is still typing.
+  if ($('#detail').open) { $('#detail').close(); currentItemId = null; toast('다른 창에서 정보가 변경되었습니다. 상세 화면을 다시 열어 주세요.'); }
+});
+
+let editingId = null, editingSnapshot = null, editToken = 0;
+function openEdit(itemId) {
+  if (!refreshState()) return toast('저장소를 먼저 복구해 주세요.');
+  const item = state.items.find(i => i.id === itemId);
+  if (!item || item.status !== 'stored') return toast('보관 중인 물건만 수정할 수 있습니다.');
+  ++editToken; editingId = itemId; editingSnapshot = JSON.stringify(item);
+  $('#edit-form').reset(); $('#edit-error').textContent = '';
+  for (const key of ['title','category','place','date','storage','description']) $('#edit-'+key).value = item[key];
+  $('#edit-date').max = today(); $('#edit-preview').src = item.photo;
+  $('#edit-dialog').showModal();
+}
+$('#edit-cancel').onclick = () => $('#edit-dialog').close();
+$('#edit-dialog').addEventListener('close',() => { ++editToken; editingId = null; editingSnapshot = null; });
+$('#edit-form').onsubmit = async event => {
+  event.preventDefault();
+  const form = event.currentTarget, button = form.querySelector('[type=submit]');
+  if (button.disabled || !editingId) return;
+  const itemId = editingId, snapshot = editingSnapshot, token = editToken;
+  button.disabled = true; $('#edit-error').textContent = '';
+  try {
+    const data = new FormData(form), fields = {};
+    for (const key of ['title','category','place','date','storage','description']) fields[key] = String(data.get(key) ?? '').trim();
+    for (const key of ['title','category','place','date','storage']) if (!fields[key]) throw Error('필수 항목을 모두 입력해 주세요.');
+    if (!validDate(fields.date) || fields.date > today()) throw Error('발견 날짜는 오늘 또는 이전의 올바른 날짜로 입력해 주세요.');
+    const file = data.get('photo');
+    const photo = file && file.size ? await compress(file) : null;
+    if (token !== editToken || editingId !== itemId || !$('#edit-dialog').open) return;
+    save(s => {
+      const original = s.items.find(i => i.id === itemId);
+      if (!original || original.status !== 'stored') throw Error('이미 반환되었거나 삭제된 물건은 수정할 수 없습니다.');
+      if (JSON.stringify(original) !== snapshot) throw Error('다른 창에서 정보가 변경되었습니다. 취소 후 수정 화면을 다시 열어 주세요.');
+      const updated = {...original,...fields,photo:photo || original.photo,updatedAt:new Date().toISOString()};
+      return {...s,items:s.items.map(i => i.id === itemId ? updated : i),notifications:s.notifications.map(n => n.itemId === itemId ? {...n,title:updated.title} : n)};
+    });
+    $('#edit-dialog').close(); render(); toast('물건 정보를 수정했습니다. 수령 신청과 등록일은 유지됩니다.');
+  } catch (e) { $('#edit-error').textContent = e.message; }
+  finally { button.disabled = false; }
+};
+function downloadJson(value, filename) {
+  const url = URL.createObjectURL(new Blob([JSON.stringify(value)],{type:'application/json'}));
+  const link = document.createElement('a'); link.href = url; link.download = filename;
+  document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url),1000);
+}
+$('#export-data').onclick = () => {
+  try {
+    const data = readState();
+    downloadJson({format:'school-lost-found',version:3,exportedAt:new Date().toISOString(),data},`학교분실물-백업-${today()}.json`);
+    toast('사진과 수령·반환 기록을 백업했습니다. 파일에는 신청 특징도 포함되니 보관에 주의해 주세요.');
+  } catch { toast('정상 데이터를 백업할 수 없습니다. 오류 안내의 원본 데이터 백업을 이용해 주세요.'); }
+};
+let restoreToken = 0;
+$('#restore-file').onchange = async () => {
+  const token = ++restoreToken, file = $('#restore-file').files[0];
+  $('#restore-error').textContent = ''; $('#restore-status').textContent = '';
+  if (!file) return;
+  try {
+    if (file.size > 10*1024*1024) throw Error('10MB 이하의 백업 파일을 선택해 주세요.');
+    const parsed = JSON.parse(await file.text());
+    if (token !== restoreToken) return;
+    let candidate;
+    if (parsed && parsed.format === 'school-lost-found') {
+      if (parsed.version !== 3) throw Error('지원하지 않는 백업 버전입니다.');
+      candidate = validate(parsed.data);
+    } else candidate = validate(parsed);
+    // Keep a private snapshot: later changes or file selections cannot alter the confirmed data.
+    const snapshot = JSON.stringify(candidate), previous = localStorage.getItem(KEY);
+    confirmAction(`등록 ${candidate.items.length}개, 수령 신청 ${candidate.claims.length}개의 백업을 복원할까요? 현재 데이터 전체를 교체합니다. 먼저 현재 데이터를 백업해 주세요.`,() => {
+      if (token !== restoreToken) throw Error('선택한 백업이 바뀌었습니다. 다시 선택해 주세요.');
+      if (localStorage.getItem(KEY) !== previous) throw Error('백업을 선택한 뒤 다른 창에서 기록이 변경되었습니다. 백업 파일을 다시 선택해 주세요.');
+      try { localStorage.setItem(KEY,snapshot); }
+      catch { throw Error('저장 공간이 부족하거나 저장소가 차단되어 복원하지 못했습니다. 기존 기록은 유지됩니다.'); }
+      refreshState();
+      $('#detail').close(); $('#edit-dialog').close();
+      resetFilters(); ['#claim-search','#record-search','#record-status'].forEach(s => $(s).value = '');
+      render(); $('#restore-status').textContent = '백업 파일의 사진과 기록을 복원했습니다.';
+      toast('백업을 복원했습니다.');
+    });
+  } catch (e) {
+    if (token === restoreToken) $('#restore-error').textContent = e instanceof SyntaxError ? '올바른 JSON 백업 파일이 아닙니다. 기존 기록은 유지됩니다.' : e.message;
+  } finally { if (token === restoreToken) $('#restore-file').value = ''; }
+};
+
+refreshState(); render();
+</script>
+</body>
+</html>
